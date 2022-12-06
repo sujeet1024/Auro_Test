@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import time
 
 class AllBooks():
     def __init__(self):
@@ -106,6 +107,7 @@ if __name__ == "__main__":
 
     lines = data.split('\n')
     lines = lines[2:-1]
+    start_time = time.time()
     for l in lines:
         l = l.replace("=\" ", "\"")
         l = l.replace("=\" ", "\"")
@@ -124,7 +126,6 @@ if __name__ == "__main__":
             vol = l.split()[4].split("\"")[1]
             vol = float(vol)
             order_id = l.split()[5].split("\"")[1]
-            print(instr_type, book_name, operation, price, vol, order_id)
             book_keeper.add_order(book_name, operation, price, vol, order_id)
 
         else:
@@ -132,5 +133,7 @@ if __name__ == "__main__":
             order_id = l.split()[2].split("\"")[1]
             book_keeper.delete_order(book_name, order_id)
 
+    end_time  = time.time()
     print(book_keeper)
+    print("Total processing time: {}".format(end_time - start_time))
     # print(lines)
